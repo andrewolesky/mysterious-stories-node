@@ -1,0 +1,24 @@
+{
+  "name": "mysterious-stories-node",
+  "version": "1.0.0",
+  "description": "A platform for sharing ghostly encounters.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/andrewolesky/mysterious-stories-node.git"
+  },
+  "author": "Andrew Olesky",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/andrewolesky/mysterious-stories-node/issues"
+  },
+  "homepage": "https://github.com/andrewolesky/mysterious-stories-node#readme",
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
+}
