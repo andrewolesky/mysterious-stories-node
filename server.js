@@ -1,41 +1,25 @@
-import { createServer } from "node:http";
-import path from "node:path";
-import { pathToFileURL } from "node:url";
+import http from "node:http";
 import { serveStatic } from "./utils/serveStatic.js";
-import fs from "node:fs/promises";
+import { handleGet } from "./handlers/routeHandlers.js";
+import { handlePost } from "./handlers/routeHandlers.js";
+import { handleNews } from "./handlers/routeHandlers.js";
 
 const PORT = 8000;
 
-// console.log(import.meta.dirname);
 const __dirname = import.meta.dirname;
-// console.log(__dirname); // oldschool node, without "type": "module"
 
-// console.log("CWD", process.cwd());
-
-const server = createServer(async (req, res) => {
-  //   const absPathToResource = path.join(__dirname, "public", "index.html");
-  //   const relPathToResource = path.join("public", "index.html");
-  //   console.log("absolute: ", absPathToResource);
-  //   console.log("relative: ", relPathToResource);
-
-  //   const content = fs.readFileSync(serveStatic(__dirname), "utf8");
-
-  //   res.statusCode = 200;
-  //   res.setHeader("Content-Type", "text/html");
-  //   res.writeHead(200, { "Content-Type": "text/html" });
-  //   res.end("<html><h1>The server is working</h1></html>");
-  //   res.end(content);
-
-  //   fs.readFile(serveStatic(__dirname), "utf8", (err, content) => {
-  //     if (err) {
-  //       console.log(err);
-  //       return;
-  //     }
-  //     res.writeHead(200, { "Content-Type": "text/html" });
-  //     res.end(content);
-  //   });
-
-  await serveStatic(req, res, __dirname);
+const server = http.createServer(async (req, res) => {
+  if (req.url === "/api") {
+    if (req.method === "GET") {
+      return await handleGet(res);
+    } else if (req.method === "POST") {
+      handlePost(req, res);
+    }
+  } else if (req.url === "/api/news") {
+    return await handleNews(req, res);
+  } else if (!req.url.startsWith("/api")) {
+    return await serveStatic(req, res, __dirname);
+  }
 });
 
-server.listen(PORT, () => console.log(`Server running on port: ${PORT}`));
+server.listen(PORT, () => console.log(`Connected on port: ${PORT}`));

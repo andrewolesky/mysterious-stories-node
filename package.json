@@ -20,5 +20,8 @@
   "homepage": "https://github.com/andrewolesky/mysterious-stories-node#readme",
   "devDependencies": {
     "nodemon": "^3.1.10"
+  },
+  "dependencies": {
+    "sanitize-html": "^2.17.0"
   }
 }
